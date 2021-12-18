@@ -7,11 +7,11 @@ const {
   retweetTweet,
 } = require('./lib/twitter.js');
 const { saveTweet } = require('./lib/firebase.js');
-const { parseDataIntoTweet } = require('./lib/utils.js');
+const { parseDataIntoTweet } = require('./lib/parser.js');
 
 async function onNewTweet(data) {
   console.info('New Tweet!');
-  const tweet = parseDataIntoTweet(data);
+  const tweet = await parseDataIntoTweet(data);
   if (tweet.type !== 'tweet') {
     console.info('Skipping type', tweet.type);
   }
@@ -20,14 +20,14 @@ async function onNewTweet(data) {
   console.info('Adding to firebase');
   saveTweet(tweet);
 
-  console.info('Reply tweet');
-  replyTweet(tweet.id, generateReply(tweet));
+  //   console.info('Reply tweet');
+  //   replyTweet(tweet.id, generateReply(tweet));
 
-  console.info('Like tweet');
-  likeTweet(tweet.id);
+  //   console.info('Like tweet');
+  //   likeTweet(tweet.id);
 
-  console.info('Retweet tweet');
-  retweetTweet(tweet.id);
+  //   console.info('Retweet tweet');
+  //   retweetTweet(tweet.id);
 }
 
 function generateReply(tweet) {
@@ -41,4 +41,5 @@ function start() {
 }
 
 // Start
+
 start();
